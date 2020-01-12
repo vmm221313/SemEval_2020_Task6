@@ -5,8 +5,6 @@ import torch.optim as optim
 import networkx as nx
 
 
-# (1x1024)x(1024x2)
-
 class gcn(nn.Module):
     def __init__(self, num_output_classes, embedding_dim):
         super(gcn, self).__init__()

@@ -27,8 +27,6 @@ model = gcn(num_output_classes, embedding_dim)
 loss_function = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
 
-train(graphs, df, model, loss_function, optimizer, num_epochs)
-
-    
+model, graphs = train(graphs, df, model, loss_function, optimizer, num_epochs)
 
 
