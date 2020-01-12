@@ -5,7 +5,7 @@ import networkx as nx
 from tqdm import tqdm_notebook
 
 
-def build_graphs(df, num_adj):
+def build_graphs(df, num_adj, word_embeddings):
     if os.path.exists('data/graphs_dict'):
         with open('data/graphs_dict', 'rb') as graphs_file:
             graphs_dict = pickle.load(graphs_file)
@@ -13,9 +13,6 @@ def build_graphs(df, num_adj):
         return graphs_dict
     
     else:
-        with open('data/word_embeddings_BERT_cleaned_vocab', 'rb') as file:
-            word_embeddings = pickle.load(file)
-            
         adj_words = []
         for i in tqdm_notebook(range(len(df))):
             for j in range(len(df['text'][i])):

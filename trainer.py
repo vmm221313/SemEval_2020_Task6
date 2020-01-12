@@ -12,23 +12,8 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 
-def load_graph_params():
-    with open('data/weights_dict', 'rb') as weights_file:
-        weights_dict = pickle.load(weights_file)
-    
-    with open('data/word_embeddings_BERT_cleaned_vocab', 'rb') as file:
-        word_embeddings = pickle.load(file)
-    
-    node_param = {}
-    for word in word_embeddings:
-        node_param[word] = torch.randn(1)
-    
-    return weights_dict, word_embeddings, node_param
-
-
-def train(graphs, df, model, loss_function, optimizer, num_epochs):
-    weights_dict, word_embeddings, node_param = load_graph_params()
-    
+def train(graphs, df, model, loss_function, optimizer, num_epochs, weights_dict, word_embeddings, node_param):
+    model.train()
     for epoch in tqdm_notebook(range(int(num_epochs))):
         for i in tqdm_notebook(range(len(graphs))):
 
@@ -38,11 +23,9 @@ def train(graphs, df, model, loss_function, optimizer, num_epochs):
                     
             activated_out = model(graphs[i])
 
-            loss = loss_function(activated_out, df['label'][i])
-            loss.backward()
+            loss = loss_function(activated_out, torch.tensor([df['label'][i]]))
+            loss.backward(retain_graph=True)
             optimizer.step()
 
-    
+            #print(node_param['#'])
     return model, graphs
-
-

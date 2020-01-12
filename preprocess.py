@@ -15,21 +15,15 @@ def filter_tokens(tokens, stopwords):
 
 
 def load_and_preprocess():
-    if os.path.exists('data/task6_data.csv'):
-        df = po.read_csv('data/task6_data.csv').drop('Unnamed: 0', axis = 1)
-            
-        return df
-    
-    else:
-        df = po.read_csv('data/task6_train.csv').drop('Unnamed: 0', axis = 1)
-        df = po.concat((df, po.read_csv('data/task6_test.csv').drop('Unnamed: 0', axis = 1)), ignore_index=True)
-        df.dropna(inplace=True)
+    df = po.read_csv('data/task6_train.csv').drop('Unnamed: 0', axis = 1)
+    df = po.concat((df, po.read_csv('data/task6_test.csv').drop('Unnamed: 0', axis = 1)), ignore_index=True)
+    df.dropna(inplace=True)
 
-        stopwords = list(set(nltk.corpus.stopwords.words("english")))
+    stopwords = list(set(nltk.corpus.stopwords.words("english")))
 
-        ### tokenize & remove funny characters
-        df["text"] = df["text"].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: filter_tokens(x, stopwords))
+    ### tokenize & remove funny characters
+    df["text"] = df["text"].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: filter_tokens(x, stopwords))
 
-        df.to_csv('data/task_6_data.csv', index = False)
+    df.to_csv('data/task_6_data.csv', index = False)
 
-        return df
+    return df

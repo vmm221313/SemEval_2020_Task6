@@ -22,6 +22,7 @@ def get_message_and_update(i, graphs, word_embeddings, node_param):
     for j in range(len(graphs)):
         if graphs[j].has_node(edge):
             graphs[j].node[edge]['representation'] = word_embeddings[edge]
+    
         
     return graphs
 

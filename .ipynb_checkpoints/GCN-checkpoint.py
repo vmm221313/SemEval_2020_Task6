@@ -5,14 +5,13 @@ import torch.optim as optim
 import networkx as nx
 
 
-# (1x1024)x(1024x2)
-
 class gcn(nn.Module):
-    def __init__(self, num_output_classes, embedding_dim):
+    def __init__(self, num_output_classes, embedding_dim, node_param):
         super(gcn, self).__init__()
         
         self.num_output_classes = num_output_classes
         self.embedding_dim = embedding_dim
+        #self.node_param = nn.ParameterDict(node_param)
         
         self.linear = nn.Linear(embedding_dim, num_output_classes)
         
