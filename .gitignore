@@ -1,4 +1,6 @@
-playgrounds.ipynb
+playground.ipynb
 data/word_embeddings_BERT_cleaned_vocab
 data/weights_dict
 data/graphs_dict
+__pycache__/
+.ipynb_checkpoints/
