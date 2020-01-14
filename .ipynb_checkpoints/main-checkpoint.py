@@ -22,19 +22,144 @@ num_output_classes = 2
 embedding_dim = 1024
 num_epochs = 5
 
-weights_dict, word_embeddings, node_param = load_graph_params()
+weights_dict, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx = load_graph_params()
 
 graphs = build_graphs(df, num_adj, word_embeddings)
 
-model = gcn(num_output_classes, embedding_dim, node_param)
+model = gcn(num_output_classes, embedding_dim, node_param, weights_dict, word_embeddings)
 loss_function = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
 
-model, graphs = train(graphs, df, model, loss_function, optimizer, num_epochs, weights_dict, word_embeddings, node_param)
+model, graphs = train(graphs, df, model, loss_function, optimizer, num_epochs, weights_dict, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx)
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for tuple in weights_dict:
+    print(weights_dict[tuple])
+    break
+    #weights_tuple_to_idx[tuple] = str(i)
+
+len(node_param)
+
+len(word_to_idx)
+
+
+
+
+
+
+
+cleaned_node_param = {}
+for word in node_param:
+    new_word = '_' + word + '_'
+    cleaned_node_param[new_word] = node_param[word]
+
+for weight in weights_dict:
+    weights_dict[weight] = torch.tensor(weights_dict[weight].numpy(), requires_grad = True)
+
+with open('data/weights_dict', 'wb') as weights_file:
+    pickle.dump(weights_dict, weights_file)
+
+for weight in weights_dict:
+    print(weight)
+
+for word in word_embeddings:
+    print(word_embeddings[word])
+
+
+
+
+
+with open('data/word_embeddings_BERT_cleaned_vocab', 'wb') as file:
+    pickle.dump(word_embeddings, file) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+def infinite_sequence():
+    num = 0
+    while True:
+        yield num
+        num += 1
+
+
+gen = infinite_sequence()
+
+next(gen)
+
+type(model.parameters())
+
+for parameter in model.parameters():
+    print(parameter)
+
+param = nn.Parameter(torch.tensor([-0.1999], requires_grad=True))
+
+a = {'params': param}
+
+optimizer.add_param_group(a)
+
+optimizer.param_groups
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+len(df)
+
+df.to_csv('data/task6_data.csv', index = False)
+
+for graph in graphs:
+    if graphs[graph].number_of_nodes() == 0:
+        print('aerwg')
+
+len(graphs)
 
 
 

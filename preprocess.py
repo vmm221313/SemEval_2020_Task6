@@ -24,6 +24,14 @@ def load_and_preprocess():
     ### tokenize & remove funny characters
     df["text"] = df["text"].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: filter_tokens(x, stopwords))
 
-    df.to_csv('data/task_6_data.csv', index = False)
+    empty_sent_index = []
+    for i, sent in enumerate(df['text']):
+        if len(sent) == 0:
+            empty_sent_index.append(i)
 
+    df = df.drop(empty_sent_index, axis = 0)
+    df = df.reset_index(drop = True)
+
+    df.to_csv('data/task_6_data.csv', index = False)
+    
     return df
