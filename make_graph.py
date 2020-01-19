@@ -6,8 +6,8 @@ from tqdm import tqdm_notebook
 
 
 def build_graphs(df, num_adj, word_embeddings):
-    if os.path.exists('data/graphs_dict'):
-        with open('data/graphs_dict', 'rb') as graphs_file:
+    if os.path.exists('data/graphs_dict__num_adj_'+str(num_adj)):
+        with open('data/graphs_dict__num_adj_'+str(num_adj), 'rb') as graphs_file:
             graphs_dict = pickle.load(graphs_file)
             
         return graphs_dict
@@ -19,7 +19,7 @@ def build_graphs(df, num_adj, word_embeddings):
                 for k in range(1, num_adj):
                     adj_words.append((df['text'][i][j], df['text'][i][(j+k)%len(df['text'][i])]))
                     adj_words.append((df['text'][i][j], df['text'][i][(j-k)%len(df['text'][i])]))
-        
+        s
         adj_words = list(set(adj_words))
         
         weights_dict = {}
@@ -44,7 +44,7 @@ def build_graphs(df, num_adj, word_embeddings):
                     G.add_edges_from([(word, prev_word, {'weight': weights_dict[word, prev_word]})])
             graphs_dict[i] = G
         
-        with open('data/graphs_dict', 'wb') as graphs_file:
+        with open('data/graphs_dict__num_adj_'+str(num_adj), 'wb') as graphs_file:
             pickle.dump(graphs_dict, graphs_file)
             
         return graphs_dict
