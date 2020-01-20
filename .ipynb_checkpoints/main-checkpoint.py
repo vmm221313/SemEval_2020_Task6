@@ -21,7 +21,7 @@ df = load_and_preprocess()
 num_adj = 3
 num_output_classes = 2
 embedding_dim = 1024
-num_epochs = 5
+num_epochs = 1
 
 weights_dict, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx = load_graph_params()
 
@@ -42,5 +42,19 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=0.0001)
 # -
 
 model, graphs = train(graphs_dataset, df, model, loss_function, optimizer, num_epochs, weights_dict, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx)
+
+model
+
+
+
+model.eval()
+
+for i in tqdm_notebook(range(1000, 1100)):    
+    graphs = get_message_and_update(i, graphs, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx)
+    with torch.no_grad():
+        activated_out = model(graphs[i])
+        print(activated_out)
+
+activated_out
 
 

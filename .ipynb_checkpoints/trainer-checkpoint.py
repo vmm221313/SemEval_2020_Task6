@@ -14,10 +14,11 @@ import torch.optim as optim
 
 
 def train(graphs, df, model, loss_function, optimizer, num_epochs, weights_dict, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx):
-    model.train()
+    #model.train()
+    #i = len(graphs)
+    num = 1000
     for epoch in tqdm_notebook(range(int(num_epochs))):
-        for i in tqdm_notebook(range(len(graphs))):
-            
+        for i in tqdm_notebook(range(num)):    
             
             graphs = get_message_and_update(i, graphs, word_embeddings, node_param, word_to_idx, weights_tuple_to_idx)
             
@@ -37,5 +38,8 @@ def train(graphs, df, model, loss_function, optimizer, num_epochs, weights_dict,
             #print(node_param[word_to_idx['link']])
             #print(weights_dict[weights_tuple_to_idx[('trees', 'root')]])
             #print(word_embeddings[word_to_idx['link']])
+            
+            
+    torch.save(model, 'saved_models/model__'+str(num)+'_graphs__'+str(num_epochs)+'_epochs')
             
     return model, graphs

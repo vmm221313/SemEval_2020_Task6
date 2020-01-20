@@ -5,3 +5,4 @@ data/graphs_dict
 data/graphs_dict__num_adj_3
 __pycache__/
 .ipynb_checkpoints/
+saved_data/
